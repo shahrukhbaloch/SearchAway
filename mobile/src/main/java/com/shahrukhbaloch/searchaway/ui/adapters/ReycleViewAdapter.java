@@ -1,11 +1,13 @@
 
 package com.shahrukhbaloch.searchaway.ui.adapters;
 
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.facebook.drawee.view.DraweeView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.shahrukhbaloch.searchaway.R;
 import com.shahrukhbaloch.searchaway.data.InstagramPhoto;
@@ -29,10 +31,12 @@ public class ReycleViewAdapter extends RecyclerView.Adapter<ReycleViewAdapter.Vi
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         SquareImageView imgPhoto;
+        DraweeView imgPhoto2;
 
         public ViewHolder(View itemLayoutView, int position) {
             super(itemLayoutView);
             imgPhoto = (SquareImageView) itemLayoutView.findViewById(R.id.imgPhoto);
+            imgPhoto2 = (DraweeView)itemLayoutView.findViewById(R.id.imgPhoto2);
 //            imgPhoto.setOnClickListener(this);
         }
 
@@ -59,9 +63,10 @@ public class ReycleViewAdapter extends RecyclerView.Adapter<ReycleViewAdapter.Vi
         ViewHolder viewHolder = (ViewHolder) arg0;
 
         try {
-            imgLoader.displayImage(
-                    listPhotos.get(arg1).getImages().getStandard_resolution().getUrl(),
-                    viewHolder.imgPhoto);
+//            imgLoader.displayImage(
+//                    listPhotos.get(arg1).getImages().getStandard_resolution().getUrl(),
+//                    viewHolder.imgPhoto);
+            viewHolder.imgPhoto2.setImageURI(Uri.parse(listPhotos.get(arg1).getImages().getLow_resolution().getUrl()));
 
         } catch (NullPointerException e) {
             e.printStackTrace();

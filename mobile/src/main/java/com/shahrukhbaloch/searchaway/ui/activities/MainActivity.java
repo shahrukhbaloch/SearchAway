@@ -1,22 +1,25 @@
 package com.shahrukhbaloch.searchaway.ui.activities;
 
-import android.app.Activity;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
+import android.app.SearchManager;
+import android.content.Context;
 import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.support.v4.widget.DrawerLayout;
 
+import com.google.inject.Inject;
 import com.shahrukhbaloch.searchaway.R;
+import com.shahrukhbaloch.searchaway.data.SearchQuery;
 import com.shahrukhbaloch.searchaway.ui.fragments.NavigationDrawerFragment;
 import com.shahrukhbaloch.searchaway.ui.fragments.PhotoListFragment;
+import com.shahrukhbaloch.searchaway.web.WebCalls;
+
+import roboguice.inject.ContentView;
 
 
+@ContentView(R.layout.activity_search_away)
 public class MainActivity extends BaseActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
@@ -30,11 +33,13 @@ public class MainActivity extends BaseActivity
      */
     private CharSequence mTitle;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search_away);
-
+//        setContentView(R.layout.activity_search_away);
+//        mBus = new Bus();
+//        mBus.register(this);
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
@@ -46,15 +51,17 @@ public class MainActivity extends BaseActivity
 
         addFragment(PhotoListFragment.newInstance());
 
+        mBus.post(new SearchQuery("Posting from actibity"));
+
     }
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
-                .commit();
+//        FragmentManager fragmentManager = getSupportFragmentManager();
+//        fragmentManager.beginTransaction()
+//                .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
+//                .commit();
     }
 
     public void onSectionAttached(int number) {
@@ -87,6 +94,25 @@ public class MainActivity extends BaseActivity
             // decide what to show in the action bar.
             getMenuInflater().inflate(R.menu.search_away, menu);
             restoreActionBar();
+
+            SearchManager manager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+            SearchView search = (SearchView) menu.findItem(R.id.search).getActionView();
+            search.setSearchableInfo(manager.getSearchableInfo(getComponentName()));
+            search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+                @Override
+                public boolean onQueryTextSubmit(String s) {
+                    mBus.post(new SearchQuery(s));
+                    return false;
+                }
+
+                @Override
+                public boolean onQueryTextChange(String query) {
+                    return true;
+                }
+
+            });
+
             return true;
         }
         return super.onCreateOptionsMenu(menu);
@@ -105,46 +131,6 @@ public class MainActivity extends BaseActivity
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        public PlaceholderFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_search_away, container, false);
-            return rootView;
-        }
-
-        @Override
-        public void onAttach(Activity activity) {
-            super.onAttach(activity);
-            ((MainActivity) activity).onSectionAttached(
-                    getArguments().getInt(ARG_SECTION_NUMBER));
-        }
     }
 
 }

@@ -16,7 +16,7 @@ import retrofit.converter.GsonConverter;
 
 public class WebServiceFactory {
 
-    public static String SERVER_URL = "https://api.instagram.com/v1/";
+
     private static WebService webService;
     private static Gson gson;
 
@@ -27,7 +27,7 @@ public class WebServiceFactory {
                     .setClient(createClient())
                     .setConverter(new GsonConverter(getGson()))
                     .setLogLevel(RestAdapter.LogLevel.FULL)
-                    .setEndpoint(SERVER_URL)
+                    .setEndpoint(WebConstants.SERVER_URL)
                     .build();
 
             webService = restAdapter.create(WebService.class);
