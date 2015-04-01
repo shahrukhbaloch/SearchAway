@@ -83,7 +83,7 @@ public class PhotoListFragment extends RoboFragment {
 
         mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), PHOTOS_GRID_COLUMNS));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        adapterPhotos = new ReycleViewAdapter(listPhotos);
+        adapterPhotos = new ReycleViewAdapter(listPhotos, getActivity());
         mRecyclerView.setAdapter(adapterPhotos);
         mBus.register(this);
         webCalls.getDefaultPhotos();
@@ -92,68 +92,10 @@ public class PhotoListFragment extends RoboFragment {
 
     @Subscribe
     public void populateRecyclerView(InstagramPhotosWrapper instagramPhotosWrapper) {
-        adapterPhotos.listPhotos.clear();
-        adapterPhotos.listPhotos.addAll(instagramPhotosWrapper.getPhotos());
+        listPhotos.clear();
+        listPhotos.addAll(instagramPhotosWrapper.getPhotos());
         adapterPhotos.notifyDataSetChanged();
     }
 
-    @Subscribe
-    public void doBusTest(SearchQuery searchQuery) {
-        Log.d(getClass().getSimpleName(), searchQuery.getSearchString());
-    }
 
-
-//    @OnItemClick(R.id.gridViewPhotos)
-//    void onItemClick(int position) {
-//        Toast.makeText(getActivity(), "Clicked position " + position + "!", Toast.LENGTH_SHORT).show();
-//
-//    }
-
-
-//    @Override
-//    public void onItemClick(AdapterView<?> parent, View view, int position,
-//            long id) {
-//
-////        InstaPhoto item = (InstaPhoto) adapterPhotos.getItem(position);
-////
-////        String gsonPhoto = gson.toJson(item, InstaPhoto.class);
-////
-////        addAndShowDialogFragment(ImageDialogFragment.newInstance(gsonPhoto));
-//
-//    }
-
-//    public void addAndShowDialogFragment(
-//            DialogFragment dialog) {
-//        FragmentTransaction transaction = getFragmentManager()
-//                .beginTransaction();
-//        dialog.show(transaction, "tag");
-//
-//    }
-
-
-//    private Callback<WebResponse<ArrayList<InstagramPhoto>>> photosCallback = new Callback<WebResponse<ArrayList<InstagramPhoto>>>() {
-//
-//        @Override
-//        public void success(WebResponse<ArrayList<InstagramPhoto>> arg0,
-//                            Response arg1) {
-//
-//            if (arg0.getResult() != null) {
-//
-//                adapterPhotos.listPhotos.clear();
-//                adapterPhotos.listPhotos.addAll(arg0.getResult());
-//                adapterPhotos.notifyDataSetChanged();
-//            }
-//
-//        }
-//
-//        @Override
-//        public void failure(RetrofitError arg0) {
-//
-//            WebErrorHandler.handleInstagramError(getActivity(), arg0);
-////            Toast.makeText(
-////                    getActivity(),
-////                    "Internet Connection not found, Please connect to the internet to continue",
-////                    Toast.LENGTH_LONG).show();
-//        }
-//    };
 }

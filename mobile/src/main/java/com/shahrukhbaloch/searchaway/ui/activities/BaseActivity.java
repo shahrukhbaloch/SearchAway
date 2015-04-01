@@ -28,7 +28,7 @@ public abstract class BaseActivity extends RoboActionBarActivity {
 
     }
 
-    protected void addAndShowDialogFragment(
+    public void addAndShowDialogFragment(
             DialogFragment dialog, String tag) {
         FragmentTransaction transaction = getSupportFragmentManager()
                 .beginTransaction();
@@ -40,7 +40,7 @@ public abstract class BaseActivity extends RoboActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d(getClass().getSimpleName(),"Hashcode is "  +mBus.hashCode());
+        Log.d(getClass().getSimpleName(), "Hashcode is " + mBus.hashCode());
 
         mBus.register(this);
     }

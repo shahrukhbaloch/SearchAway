@@ -12,19 +12,17 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.squareup.otto.Bus;
 
-import dagger.ObjectGraph;
 import roboguice.RoboGuice;
 
 /**
  * Created by shahrukh.baloch on 3/24/15.
  */
 public class BaseApplication extends Application {
-    private ObjectGraph mObjectGraph;
 
     @Override
     public void onCreate() {
         super.onCreate();
-//        initImageLoader();
+        initImageLoader();
         Fresco.initialize(getApplicationContext());
 
 //        BaseModule baseInjectionModule = new BaseModule(getApplicationContext());

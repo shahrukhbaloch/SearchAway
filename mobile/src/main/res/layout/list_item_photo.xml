@@ -12,16 +12,10 @@
         android:layout_gravity="center">
 
         <com.facebook.drawee.view.SimpleDraweeView
-            android:id="@+id/imgPhoto2"
+            android:id="@+id/imgPhoto"
             android:layout_width="match_parent"
             android:layout_gravity="center"
             android:layout_height="180dp" />
-
-        <com.shahrukhbaloch.searchaway.ui.views.SquareImageView
-            android:id="@+id/imgPhoto"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
 
     </android.support.v7.widget.CardView>
 
