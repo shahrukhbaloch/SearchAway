@@ -13,7 +13,6 @@ import com.shahrukhbaloch.searchaway.R;
 import com.shahrukhbaloch.searchaway.data.InstagramPhoto;
 import com.shahrukhbaloch.searchaway.ui.activities.MainActivity;
 import com.shahrukhbaloch.searchaway.ui.dialogs.PhotoDialogFragment;
-import com.shahrukhbaloch.searchaway.ui.views.SquareImageView;
 
 import java.util.ArrayList;
 
@@ -22,27 +21,27 @@ public class ReycleViewAdapter extends RecyclerView.Adapter<ReycleViewAdapter.Vi
     private ArrayList<InstagramPhoto> listPhotos;
     private Activity mActivity;
 
+    private static String TAG_DIALOG_FRAGMENT = "Dialog Fragment Tag";
+
     public ReycleViewAdapter(ArrayList<InstagramPhoto> photos, Activity activity) {
         this.listPhotos = photos;
         this.mActivity = activity;
-
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        private SquareImageView imgPhoto;
-        private DraweeView imgPhoto2;
+        private DraweeView imgPhoto;
 
         public ViewHolder(View itemLayoutView, int position) {
             super(itemLayoutView);
-            imgPhoto2 = (DraweeView) itemLayoutView.findViewById(R.id.imgPhoto);
-            imgPhoto2.setOnClickListener(this);
+            imgPhoto = (DraweeView) itemLayoutView.findViewById(R.id.imgPhoto);
+            imgPhoto.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
             MainActivity activity = (MainActivity) ReycleViewAdapter.this.mActivity;
-            activity.addAndShowDialogFragment(PhotoDialogFragment.newInstance(listPhotos.get(getPosition()).getImages().getLow_resolution().getUrl()), "dummmy tag");
+            activity.addAndShowDialogFragment(PhotoDialogFragment.newInstance(listPhotos.get(getPosition()).getImages().getStandard_resolution().getUrl()), TAG_DIALOG_FRAGMENT);
         }
 
     }
@@ -56,11 +55,9 @@ public class ReycleViewAdapter extends RecyclerView.Adapter<ReycleViewAdapter.Vi
     @Override
     public void onBindViewHolder(ViewHolder arg0, int arg1) {
 
-        ViewHolder viewHolder = (ViewHolder) arg0;
 
         try {
-//
-            viewHolder.imgPhoto2.setImageURI(Uri.parse(listPhotos.get(arg1).getImages().getStandard_resolution().getUrl()));
+            arg0.imgPhoto.setImageURI(Uri.parse(listPhotos.get(arg1).getImages().getStandard_resolution().getUrl()));
 
         } catch (NullPointerException e) {
             e.printStackTrace();

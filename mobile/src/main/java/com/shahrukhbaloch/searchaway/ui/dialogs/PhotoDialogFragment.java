@@ -18,10 +18,16 @@ import roboguice.inject.InjectView;
 /**
  * Created by shahrukh.baloch on 4/1/15.
  */
-public class PhotoDialogFragment extends RoboDialogFragment {
+public class PhotoDialogFragment extends RoboDialogFragment implements View.OnClickListener {
 
     private static String KEY_IMAGE_URL = "image url key";
 
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setStyle(DialogFragment.STYLE_NO_TITLE, android.R.style.Theme_Black_NoTitleBar_Fullscreen);
+    }
 
     public static PhotoDialogFragment newInstance(String imageURL) {
         Bundle bundle = new Bundle();
@@ -47,13 +53,23 @@ public class PhotoDialogFragment extends RoboDialogFragment {
             Bundle b = getArguments();
             String url = b.getString(KEY_IMAGE_URL);
 
+//        Fresco Currently has a known bug where it cannot load URLs with a redirect, Temporarily going to use UIL until there's a fix
+//        draweeTouchImageView.setImageURI(Uri.parse(url));
             if (url != null) {
                 ImageLoader.getInstance().displayImage(url, draweeTouchImageView);
             }
         }
-        //Fresco Currently has a known bug where it cannot load URLs with a redirect, Temporarily going to use UIL until there's a fix
-//        draweeTouchImageView.setImageURI(Uri.parse(url));
     }
 
 
+    @Override
+    public void onClick(View v) {
+        if (v == draweeTouchImageView) {
+            showDownloadOption();
+        }
+    }
+
+    private void showDownloadOption() {
+        
+    }
 }

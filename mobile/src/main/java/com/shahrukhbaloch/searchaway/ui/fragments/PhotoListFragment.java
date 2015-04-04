@@ -95,6 +95,9 @@ public class PhotoListFragment extends RoboFragment {
         listPhotos.clear();
         listPhotos.addAll(instagramPhotosWrapper.getPhotos());
         adapterPhotos.notifyDataSetChanged();
+        if (listPhotos.size() > 0) {
+            mRecyclerView.scrollToPosition(0);
+        }
     }
 
 
