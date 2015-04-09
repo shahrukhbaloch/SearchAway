@@ -58,7 +58,6 @@ public class ReycleViewAdapter extends RecyclerView.Adapter<ReycleViewAdapter.Vi
 
         try {
             arg0.imgPhoto.setImageURI(Uri.parse(listPhotos.get(arg1).getImages().getStandard_resolution().getUrl()));
-
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
