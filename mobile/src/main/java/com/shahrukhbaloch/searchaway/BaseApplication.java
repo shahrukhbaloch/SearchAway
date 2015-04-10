@@ -33,9 +33,6 @@ public class BaseApplication extends Application {
 
         RoboGuice.getOrCreateBaseApplicationInjector(this, RoboGuice.DEFAULT_STAGE,
                 RoboGuice.newDefaultRoboModule(this), new BaseModule());
-        //sad
-
-
 
     }
 

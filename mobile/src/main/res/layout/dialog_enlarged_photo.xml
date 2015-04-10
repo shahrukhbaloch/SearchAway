@@ -1,20 +1,27 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fab="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:gravity="center">
 
     <com.shahrukhbaloch.searchaway.ui.views.DraweeTouchImageView
-        android:id="@+id/imgPhotoBig"
+        android:id="@+id/img_photo_big"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
+    <com.software.shell.fab.ActionButton
+        android:id="@+id/btn_download"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Download"
-        android:id="@+id/button_download"
-        android:layout_gravity="center_horizontal|bottom" />
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true" />
 
-</FrameLayout>
+    <com.github.rahatarmanahmed.cpv.CircularProgressView
+        android:id="@+id/progress_view"
+        android:layout_width="40dp"
+        android:layout_centerInParent="true"
+        android:layout_height="40dp"
+        app:cpv_indeterminate="true" />
+
+</RelativeLayout>
